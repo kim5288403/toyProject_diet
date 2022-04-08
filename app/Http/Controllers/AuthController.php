@@ -12,6 +12,17 @@ class AuthController extends Controller
         return view("join");
     }
 
+    public function login(Request $request){
+        $credentials = [
+            'email'=>$request->email,
+            'password'=>$request->password
+        ];
+        if(!auth()->attempt($credentials)){
+            return view("login",["message"=>"로그인정보가 정확하지 않습니다."]);
+        }
+        return view('index');
+    }
+
     public function store(Request $request){
         if(User::where('email',$request->email)->count()){
             return view('join',["message"=>"이미 사용중인 이메일입니다."]);
@@ -33,4 +44,6 @@ class AuthController extends Controller
         }
         return view('join');
     }
+
+
 }

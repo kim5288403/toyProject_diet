@@ -59,7 +59,7 @@
 
 								<!-- Feature -->
 									<section>
-										<form method="post" action="#">
+										<form method="get" action="{{route("login")}}">
 											<div class="row gtr-50">
 												<div class="col-12 col-12-small">
 													<input name="email" placeholder="email" type="text" />
@@ -68,7 +68,7 @@
 													<input name="password" placeholder="password" type="password" />
 												</div>
 												<div class="col-6">
-													<a href="#" class="form-button-submit button icon solid fa-envelope">login</a>
+													<button class="form-button-submit button icon solid fa-envelope">login</button>
 												</div>
 												<div class="col-6">
 													<a href="{{route("join")}}" class="form-button-submit button icon solid fa-envelope">join</a>
@@ -89,27 +89,7 @@
 							<h2>Questions or comments? <strong>Get in touch:</strong></h2>
 						</header>
 						<div class="row">
-							<div class="col-6 col-12-medium">
-								<section>
-									<form method="post" action="#">
-										<div class="row gtr-50">
-											<div class="col-6 col-12-small">
-												<input name="name" placeholder="Name" type="text" />
-											</div>
-											<div class="col-6 col-12-small">
-												<input name="email" placeholder="Email" type="text" />
-											</div>
-											<div class="col-12">
-												<textarea name="message" placeholder="Message"></textarea>
-											</div>
-											<div class="col-12">
-												<a href="#" class="form-button-submit button icon solid fa-envelope">Send Message</a>
-											</div>
-										</div>
-									</form>
-								</section>
-							</div>
-							<div class="col-6 col-12-medium">
+							<div class="col-12 col-12-medium">
 								<section>
 									<p>Erat lorem ipsum veroeros consequat magna tempus lorem ipsum consequat Phaselamet
 									mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique. Curabitur
@@ -161,12 +141,23 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+		<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+		<script type="text/javascript">
+			@if(!empty($message))
+			swal({
+				type: 'warning',
+				title: "{{$message}}",
+				button: '확인',
+			});
+			@endif
+		</script>
+			</body>
 </html>
