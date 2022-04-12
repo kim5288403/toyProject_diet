@@ -19,13 +19,13 @@
 					<div class="container">
 
 						<!-- Logo -->
-							<h1 id="logo"><a href="index.html">Strongly Typed</a></h1>
-							<p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
+						<h1 id="logo"><a href="{{route("index")}}">Strongly Typed</a></h1>
+						<p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
 
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li><a class="icon solid fa-home" href="index.html"><span>Introduction</span></a></li>
+									<li><a class="icon solid fa-home" href="{{route("index")}}"><span>main</span></a></li>
 									<li>
 										<a href="#" class="icon fa-chart-bar"><span>Dropdown</span></a>
 										<ul>
@@ -45,7 +45,7 @@
 									</li>
 									<li><a class="icon solid fa-cog" href="left-sidebar.html"><span>Left Sidebar</span></a></li>
 									<li><a class="icon solid fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
-									<li><a class="icon solid fa-sitemap" href="{{route("users.detail")}}"><span>my page</span></a></li>
+									<li><a class="icon solid fa-sitemap" href="{{route("users.detail",Auth::user()->id)}}"><span>my page</span></a></li>
 								</ul>
 							</nav>
 

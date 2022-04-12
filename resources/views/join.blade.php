@@ -95,8 +95,8 @@
 													<label style="text-align: left">gender</label>
 													<select name="gender" >
 														<option value="">select</option>
-														<option value="남자">male</option>
-														<option value="여자">female</option>
+														<option value="male">male</option>
+														<option value="female">female</option>
 													</select>
 												</div>
 												<div class="col-6 col-12-small">

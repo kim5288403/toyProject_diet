@@ -24,6 +24,6 @@ Route::get('/join',[AuthController::class,"join"])->name("join");
 Route::post('/store',[AuthController::class,"store"])->name("store");
 
 Route::group(["as"=>'users.'],function (){
-    Route::get('/detail',[UserController::class,"detail"])->name("detail");
+    Route::get('/{id}',[UserController::class,"detail"])->name("detail");
 });
 
