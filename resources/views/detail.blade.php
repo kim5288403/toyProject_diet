@@ -10,7 +10,20 @@
 		<title>No Sidebar - Strongly Typed by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<style>
+			div[class="suggest_nutrition"]{
+				display: flex;
+			}
+			span[class="date"]{
+				background-color: #ed786a !important;
+			}
+			div[id="content"]{
+				border-radius: 1.25rem;
+				border: 2px solid #cccccc;
+				text-align: center;
+			}
+		</style>
 	</head>
 	<body class="no-sidebar is-preload">
 		<div id="page-wrapper">
@@ -44,9 +57,9 @@
 											<li><a href="#">Veroeros feugiat</a></li>
 										</ul>
 									</li>
-									<li><a class="icon solid fa-cog" href="left-sidebar.html"><span>Left Sidebar</span></a></li>
+									<li><a class="icon solid fa-cog" href="{{route("food.data")}}"><span>Left Sidebar</span></a></li>
 									<li><a class="icon solid fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
-									<li><a class="icon solid fa-sitemap" href="{{route("users.detail",Auth::user()->id)}}"><span>my page</span></a></li>
+									<li><a class="icon solid fa-sitemap" href="{{route("users.detail",empty(Auth::user()->id) ? 0 : Auth::user()->id)}}"><span>my page</span></a></li>
 								</ul>
 							</nav>
 
@@ -60,18 +73,17 @@
 
 						<!-- Content -->
 						<div id="content" class="col-8 col-12-medium">
-
 							<!-- Post -->
 							<article class="box post">
 								<header>
-									<h2><strong>내 정보</strong></h2>
+									<h2 style="margin-right: 7%"><strong>내 정보</strong></h2>
 									<form id="join" method="post" action="">
 										<div class="row gtr-50" >
-											<div class="col-12 col-12-small">
+											<div class="col-11 col-12-small">
 												<label style="text-align: left">email</label>
 												<input name="email" placeholder="email" type="text" value="{{$info->email}}" readonly/>
 											</div>
-											<div class="col-12 col-12-small">
+											<div class="col-11 col-12-small">
 												<label style="text-align: left">phone</label>
 												<input name="phone" placeholder="phone" type="text" value="{{$info->phone}}" readonly/>
 											</div>
@@ -79,7 +91,7 @@
 												<label style="text-align: left">name</label>
 												<input name="name" placeholder="name" type="text" value="{{$info->name}}" readonly/>
 											</div>
-											<div class="col-6 col-12-small">
+											<div class="col-5 col-12-small">
 												<label style="text-align: left">age</label>
 												<input name="age" placeholder="age" type="text" value="{{$info->age}}" readonly/>
 											</div>
@@ -87,26 +99,26 @@
 												<label style="text-align: left">weight</label>
 												<input name="weight" placeholder="weight" type="text" value="{{$info->weight}}" readonly/>
 											</div>
-											<div class="col-6 col-12-small">
+											<div class="col-5 col-12-small">
 												<label style="text-align: left">height</label>
 												<input name="height" placeholder="height" type="text"value="{{$info->height}}" readonly/>
-											</div>
-											<div class="col-6 col-12-small">
-												<label style="text-align: left">gender</label>
-												<select name="gender" >
-													@foreach(getGender() as $key=>$val)
-														@if($key === $info->gender)
-															<option value="{{$key}}" selected>{{$val}}</option>
-														@endif
-													@endforeach
-												</select>
 											</div>
 											<div class="col-6 col-12-small">
 												<label style="text-align: left">exercise_time</label>
 												<select name="exercise_time">
 													@foreach(getExerciseType() as $key=>$val)
 														@if($key === $info->exercise_time)
-														<option value="{{$key}}" selected>{{$val}}</option>
+															<option value="{{$key}}" selected>{{$val}}</option>
+														@endif
+													@endforeach
+												</select>
+											</div>
+											<div class="col-5 col-12-small">
+												<label style="text-align: left">gender</label>
+												<select name="gender" >
+												@foreach(getGender() as $key=>$val)
+													@if($key === $info->gender)
+															<option value="{{$key}}" selected>{{$val}}</option>
 														@endif
 													@endforeach
 												</select>
@@ -127,38 +139,39 @@
 
 										<!-- Excerpt -->
 										<article class="box excerpt">
-											<header>
-												<span class="date">July 30</span>
-												<h3><a href="#">Just another post</a></h3>
-											</header>
-											<p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
-												suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+											<span class="date">칼로리 정보</span>
+											<div class="suggest_nutrition">
+												<h3>하루 사용하는 칼로리(tdee) : {{$info["suggest_nutrition"]->tdee}}</h3><span>cal</span>
+											</div>
+											<div class="suggest_nutrition">
+												<h3>하루 기초 대사량 : {{$info["suggest_nutrition"]->basal_metabolism}}</h3><span>cal</span>
+											</div>
 										</article>
 
+									</li>
+									<li>
+										<!-- Excerpt -->
+										<article class="box excerpt">
+											<span class="date">하루 권장 영양 정보</span>
+											<div class="suggest_nutrition">
+												<h3>지방(fat) : {{$info["suggest_nutrition"]->fat}}</h3><span>g</span>
+											</div>
+											<div class="suggest_nutrition">
+												<h3>단백질(protein) : {{$info["suggest_nutrition"]->protein}}</h3><span>g</span>
+											</div>
+											<div class="suggest_nutrition">
+												<h3>탄수화물(carbohydrate) : {{$info["suggest_nutrition"]->carbohydrate}}</h3><span>g</span>
+											</div>
+											<div class="suggest_nutrition">
+												<h3>칼로리(calory) : {{$info["suggest_nutrition"]->calory}}</h3><span>cal</span>
+											</div>
+										</article>
 									</li>
 									<li>
 
 										<!-- Excerpt -->
 										<article class="box excerpt">
-											<header>
-												<span class="date">July 28</span>
-												<h3><a href="#">And another post</a></h3>
-											</header>
-											<p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
-												suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
-										</article>
-
-									</li>
-									<li>
-
-										<!-- Excerpt -->
-										<article class="box excerpt">
-											<header>
-												<span class="date">July 24</span>
-												<h3><a href="#">One more post</a></h3>
-											</header>
-											<p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
-												suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+											<button id="meal_make_button">식단 만들기</button>
 										</article>
 
 									</li>

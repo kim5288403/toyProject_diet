@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(["prefix"=>"diet"],function (){
 
 Route::get('/', function () {
     return view('index');
@@ -23,7 +25,13 @@ Route::get('/login',[AuthController::class,"login"])->name("login");
 Route::get('/join',[AuthController::class,"join"])->name("join");
 Route::post('/store',[AuthController::class,"store"])->name("store");
 
-Route::group(["as"=>'users.'],function (){
+Route::group(["prefix"=>"users","as"=>'users.'],function (){
     Route::get('/{id}',[UserController::class,"detail"])->name("detail");
+});
+
+Route::group(["prefix"=>"food","as"=>'food.'],function (){
+    Route::get('/',[FoodController::class,"data"])->name("data");
+});
+
 });
 

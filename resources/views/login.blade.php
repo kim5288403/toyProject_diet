@@ -9,7 +9,7 @@
 		<title>Login</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -24,7 +24,7 @@
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li><a class="icon solid fa-home" href="index.html"><span>Introduction</span></a></li>
+									<li><a class="icon solid fa-home" href="{{route("index")}}"><span>main</span></a></li>
 									<li>
 										<a href="#" class="icon fa-chart-bar"><span>Dropdown</span></a>
 										<ul>
@@ -42,9 +42,9 @@
 											<li><a href="#">Veroeros feugiat</a></li>
 										</ul>
 									</li>
-									<li><a class="icon solid fa-cog" href="left-sidebar.html"><span>Left Sidebar</span></a></li>
+									<li><a class="icon solid fa-cog" href="{{route("food.data")}}"><span>Left Sidebar</span></a></li>
 									<li><a class="icon solid fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
-									<li><a class="icon solid fa-sitemap" href="{{route("users.detail")}}"><span>my page</span></a></li>
+									<li><a class="icon solid fa-sitemap" href="{{route("users.detail",empty(Auth::user()->id) ? 0 : Auth::user()->id)}}"><span>my page</span></a></li>
 								</ul>
 							</nav>
 

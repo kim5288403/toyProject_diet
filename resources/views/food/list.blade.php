@@ -9,7 +9,7 @@
 		<title>Left Sidebar - Strongly Typed by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/main.css"" />
 	</head>
 	<body class="left-sidebar is-preload">
 		<div id="page-wrapper">
@@ -19,13 +19,13 @@
 					<div class="container">
 
 						<!-- Logo -->
-							<h1 id="logo"><a href="index.html">Strongly Typed</a></h1>
-							<p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
+						<h1 id="logo"><a href="{{route("index")}}">Strongly Typed</a></h1>
+						<p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
 
 						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li><a class="icon solid fa-home" href="index.html"><span>Introduction</span></a></li>
+						<nav id="nav">
+							<ul>
+								<li><a class="icon solid fa-home" href="{{route("index")}}"><span>main</span></a></li>
 									<li>
 										<a href="#" class="icon fa-chart-bar"><span>Dropdown</span></a>
 										<ul>
@@ -43,9 +43,9 @@
 											<li><a href="#">Veroeros feugiat</a></li>
 										</ul>
 									</li>
-									<li><a class="icon solid fa-cog" href="left-sidebar.html"><span>Left Sidebar</span></a></li>
+									<li><a class="icon solid fa-cog" href="{{route("food.data")}}"><span>Left Sidebar</span></a></li>
 									<li><a class="icon solid fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
-									<li><a class="icon solid fa-sitemap" href="no-sidebar.html"><span>No Sidebar</span></a></li>
+									<li><a class="icon solid fa-sitemap" href="{{route("users.detail",empty(Auth::user()->id) ? 0 : Auth::user()->id)}}"><span>my page</span></a></li>
 								</ul>
 							</nav>
 
