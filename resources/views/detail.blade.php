@@ -141,10 +141,10 @@
 										<article class="box excerpt">
 											<span class="date">칼로리 정보</span>
 											<div class="suggest_nutrition">
-												<h3>하루 사용하는 칼로리(tdee) : {{$info["suggest_nutrition"]->tdee}}</h3><span>cal</span>
+												<h3>하루 사용하는 칼로리(tdee) : <span class="tdee">{{$info["suggest_nutrition"]->tdee}}</span></h3><span>cal</span>
 											</div>
 											<div class="suggest_nutrition">
-												<h3>하루 기초 대사량 : {{$info["suggest_nutrition"]->basal_metabolism}}</h3><span>cal</span>
+												<h3>하루 기초 대사량 : <span class="basal_metabolism">{{$info["suggest_nutrition"]->basal_metabolism}}</span></h3><span>cal</span>
 											</div>
 										</article>
 
@@ -154,16 +154,16 @@
 										<article class="box excerpt">
 											<span class="date">하루 권장 영양 정보</span>
 											<div class="suggest_nutrition">
-												<h3>지방(fat) : {{$info["suggest_nutrition"]->fat}}</h3><span>g</span>
+												<h3>지방(fat) : <span class="fat">{{$info["suggest_nutrition"]->fat}}</span></h3><span>g</span>
 											</div>
 											<div class="suggest_nutrition">
-												<h3>단백질(protein) : {{$info["suggest_nutrition"]->protein}}</h3><span>g</span>
+												<h3>단백질(protein) : <span class="protein">{{$info["suggest_nutrition"]->protein}}</span></h3><span>g</span>
 											</div>
 											<div class="suggest_nutrition">
-												<h3>탄수화물(carbohydrate) : {{$info["suggest_nutrition"]->carbohydrate}}</h3><span>g</span>
+												<h3>탄수화물(carbohydrate) : <span class="carbohydrate">{{$info["suggest_nutrition"]->carbohydrate}}</span></h3><span>g</span>
 											</div>
 											<div class="suggest_nutrition">
-												<h3>칼로리(calory) : {{$info["suggest_nutrition"]->calory}}</h3><span>cal</span>
+												<h3>칼로리(calory) : <span class="calory">{{$info["suggest_nutrition"]->calory}}</span></h3><span>cal</span>
 											</div>
 										</article>
 									</li>
@@ -262,12 +262,55 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+		<script>
+			$(document).ready(function () {
+				let protein = "{!! $info["suggest_nutrition"]->protein !!}";
+				let fat = "{!! $info["suggest_nutrition"]->fat !!}";
+				let carbohydrate = "{!! $info["suggest_nutrition"]->carbohydrate !!}";
+				let calory = "{!! $info["suggest_nutrition"]->calory !!}";
+				let tdee = "{!! $info["suggest_nutrition"]->tdee !!}";
+				let basal_metabolism = "{!! $info["suggest_nutrition"]->basal_metabolism !!}";
 
+				$({ val : 0 }).animate({ protein : protein , fat : fat , carbohydrate : carbohydrate , calory : calory , basal_metabolism : basal_metabolism , tdee : tdee}, {
+					duration: 1000,
+					step: function() {
+						let fatNum = Math.floor(this.fat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let proteinNum = Math.floor(this.protein).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let carbohydrateNum = Math.floor(this.carbohydrate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let caloryNum = Math.floor(this.calory).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let tdeeNum = Math.floor(this.tdee).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let basal_metabolismNum = Math.floor(this.basal_metabolism).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						$("span[class='fat']").text(fatNum);
+						$("span[class='protein']").text(proteinNum);
+						$("span[class='carbohydrate']").text(caloryNum);
+						$("span[class='calory']").text(carbohydrateNum);
+						$("span[class='tdee']").text(tdeeNum);
+						$("span[class='basal_metabolism']").text(basal_metabolismNum);
+					},
+					complete: function() {
+						let fatNum = Math.floor(this.fat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let proteinNum = Math.floor(this.protein).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let carbohydrateNum = Math.floor(this.carbohydrate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let caloryNum = Math.floor(this.calory).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let tdeeNum = Math.floor(this.tdee).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						let basal_metabolismNum = Math.floor(this.basal_metabolism).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						$("span[class='fat']").text(fatNum);
+						$("span[class='protein']").text(proteinNum);
+						$("span[class='carbohydrate']").text(caloryNum);
+						$("span[class='calory']").text(carbohydrateNum);
+						$("span[class='tdee']").text(tdeeNum);
+						$("span[class='basal_metabolism']").text(basal_metabolismNum);
+					}
+				});
+			});
+
+		</script>
 	</body>
 </html>
