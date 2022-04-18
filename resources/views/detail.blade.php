@@ -102,7 +102,7 @@
 
 								<!-- Excerpt -->
 								<article class="box excerpt">
-									<button id="meal_make_button">식단 만들기</button>
+									<a id="meal_make_button" href="{{route("meal.meal")}}" class="form-button-submit button icon solid fa-envelope">식단 만들기</a>
 								</article>
 
 							</li>

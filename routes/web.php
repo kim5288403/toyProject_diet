@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\HashTagController;
+use App\Http\Controllers\MealController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +33,14 @@ Route::group(["prefix"=>"users","as"=>'users.'],function (){
 
 Route::group(["prefix"=>"food","as"=>'food.'],function (){
     Route::get('/',[FoodController::class,"data"])->name("data");
+});
+
+Route::group(["prefix"=>"meal","as"=>'meal.'],function (){
+    Route::get('/',[MealController::class,"meal"])->name("meal");
+});
+
+Route::group(["prefix"=>"hashTag","as"=>'hashTag.'],function (){
+    Route::get('/',[HashTagController::class,"data"])->name("data");
 });
 
 });

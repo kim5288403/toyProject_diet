@@ -9,7 +9,7 @@
         <nav id="nav">
             <ul>
                 <li><a class="icon solid fa-home" href="{{route("index")}}"><span>main</span></a></li>
-                <li><a class="icon solid fa-cog" href="{{route("food.data")}}"><span>Left Sidebar</span></a></li>
+                <li><a class="icon solid fa-cog" href="{{route("meal.meal")}}"><span>Make Meal</span></a></li>
                 <li><a class="icon solid fa-retweet" href="right-sidebar.html"><span>Right Sidebar</span></a></li>
                 <li><a class="icon solid fa-sitemap" href="{{route("users.detail",empty(Auth::user()->id) ? 0 : Auth::user()->id)}}"><span>my page</span></a></li>
                 <li>

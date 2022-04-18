@@ -70,8 +70,8 @@
 		$(document).ready(function () {
 			$("h1[id='logo']").find("a").text("join");
 			$("title").text("join");
-
 		});
+
 		$("#store_button").on("click",function () {
 			//input null 검사
 			let inputs = $("form[id='join']").find("input");
