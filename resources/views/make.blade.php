@@ -103,7 +103,13 @@
 						</div>
 						<div class="col-12 col-12-small">
 							<label style="text-align: left">HashTag</label>
-							<input name="HashTag" placeholder="HashTag" type="text" value=""/>
+							<div class="editable">
+							</div>
+
+							<ul id="hashTagUl" class="divided" style="background-color:#f7f7f7; ">
+								<li>
+								</li>
+							</ul>
 						</div>
 						<input class="hide" name="food_id">
 						<input class="hide" name="calorie">
@@ -196,6 +202,36 @@
 			display: none;
 		}
 
+		#hashTagUl {
+			border-bottom-left-radius: 1.25rem;
+			border-bottom-right-radius: 1.25rem;
+		}
+
+		#hashTagUl li div{
+			text-align: left;
+			margin-left: 2%;
+			cursor: pointer;
+		}
+
+		div.editable{
+			width: 100%;
+			height: 50px;
+			border: 1px solid #dcdcdc;
+			overflow-y: auto;
+		}
+
+		.editable input{
+			border:none;
+			border-right:0px;
+			border-top:0px;
+			boder-left:0px;
+			boder-bottom:0px;
+			width: 105px;
+			font-weight: 600;
+			color: #ed786a;
+			pointer-events: none;
+		}
+
 	</style>
 @endsection
 @section("script")
@@ -203,6 +239,10 @@
 		$(document).ready(function () {
 			$("h1[id='logo']").find("a").text("making meal");
 			$("title").text("making meal");
+
+			$('.editable').each(function(){
+				this.contentEditable = true;
+			});
 
 			$.ajax({
 				url:"{{route('food.data')}}",
@@ -234,25 +274,41 @@
 					$("div[id='"+category+"']").append($(this));
 				 }
 				 food();
-
 			});
 
-			$("input[name='HashTag']").on("input",function () {
-				if ($(this).val().charAt(0) === "#"){
+			$(".editable").on("keyup",function () {
+				if ($(this).text().charAt(0) === "#"){
+					$("#hashTagUl").show();
 					$.ajax({
 						url:"{{route('hashTag.data')}}",
 						method:"get",
 						data:{
-							"search" : $(this).val()
+							"search" : $(this).text()
 						},
 						success:function (result) {
-							console.log(result);
+							let appendText = "";
+							$("ul[id='hashTagUl']").find("li").find("div").remove();
+
+							for(let i = 0; i < result.length; i++){
+								appendText = "";
+								appendText += "<div class='hashTag' id='"+result[i].id+"'><h4>#"+result[i].name+"</h4><span>게시물 "+result[i].tag_count+" 건</span></div>";
+								$("ul[id='hashTagUl']").find("li").append(appendText);
+							}
 						},
 						error:function (error,message,status) {
 							alert("error : "+error+"message : "+message+"status : "+status);
 						}
 					})
 				}
+			});
+
+			$(document).on("click",".hashTag",function () {
+				$(".editable").append("<input value="+$(this).find("h4").text()+" readonly>");
+				let close = $(".editable").find("input").clone();
+				$(".editable").text("");
+				$(".editable").append(close);
+				$("#hashTagUl").hide();
+				$(".editable").select();
 			});
 
 		});
