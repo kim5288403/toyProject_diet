@@ -34,12 +34,12 @@
 			$("title").text("login");
 
 		});
-		@if(!empty($message))
-		swal({
-			type: 'warning',
-			title: "{{$message}}",
-			button: '확인',
-		});
+		@if(Session::has("message"))
+			swal({
+				type: "{{Session::get("type")}}",
+				title: "{{Session::get("message")}}",
+				button: '확인',
+			});
 		@endif
 	</script>
 @endsection

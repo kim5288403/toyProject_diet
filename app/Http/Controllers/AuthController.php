@@ -19,15 +19,15 @@ class AuthController extends Controller
             'password'=>$request->password
         ];
         if(!auth()->attempt($credentials)){
-            return view("login",["message"=>"로그인정보가 정확하지 않습니다."]);
+           return view("login")->with(['message'=>'잘못된 로그인 정보입니다.',"type"=>"warning"]);
         }
-        return view('index');
+        return view("index")->with(['message'=>'로그인 성공하였습니다.',"type"=>"success"]);
     }
 
     public function store(Request $request){
         $data = $request->all();
         if(User::where('email',$data["email"])->count()){
-            return view('join',["message"=>"이미 사용중인 이메일입니다."]);
+            return view('join')->with(["message"=>"이미 사용중인 이메일입니다.","type"=>"warning"]);
         }
 
         $data["users_id"] = User::insertGetId([
@@ -45,9 +45,9 @@ class AuthController extends Controller
         if(!empty($data["users_id"])){
             (new SuggestNutrition())->create($data);
 
-            return view('login');
+            return view("login")->with(['message'=>'회원가입 성공하였습니다.',"type"=>"success"]);
         }
-        return view('join');
+        return view('join')->with(['message'=>'회원가입 실하였습니다.',"type"=>"warning"]);;
     }
 
     public function logout(){

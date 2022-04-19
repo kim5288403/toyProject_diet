@@ -9,6 +9,15 @@ class Meal extends Model
 {
     use HasFactory;
     protected $table = "meal";
+
+    public function mealHashTag(){
+        return $this->hasMany(MealHashTag::class,"meal_id","id");
+    }
+
+    public function getSearchList(){
+        return self::with(["mealHashTag"])->whereNotNull("id");
+    }
+
     public function convertModel($data) {
         if(isset($data['title']))            $this->title          = $data['title'];
         if(isset($data['users_id']))         $this->users_id       = $data['users_id'];

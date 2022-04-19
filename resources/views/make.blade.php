@@ -244,6 +244,14 @@
 				this.contentEditable = true;
 			});
 
+			@if(Session::has("message"))
+				swal({
+					type: "{{Session::get("type")}}",
+					title: "{{Session::get("message")}}",
+					button: '확인',
+				});
+			@endif
+
 			$.ajax({
 				url:"{{route('food.data')}}",
 				method:"get",
@@ -316,8 +324,18 @@
 				let hashTag = $("form[id='create']").find("input[class='hashTag']");
 				let title = $("form[id='create']").find("input[name='title']").val();
 				if (title === ""){
+					return swal({
+						type: "warning",
+						title: "title 입력해주세요.",
+						button: '확인',
+					});
 				}
 				if(food.length === 0){
+					return swal({
+						type: "warning",
+						title: "음식을 1개 이상 선택해주세요.",
+						button: '확인',
+					});
 				}
 				let fat = $("span[class='fat']").text();
 				let protein = $("span[class='protein']").text();

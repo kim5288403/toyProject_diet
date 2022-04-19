@@ -130,6 +130,15 @@
 @section("script")
 	<script>
 		$(document).ready(function () {
+
+			@if(Session::has("message"))
+				swal({
+					type: "{{Session::get("type")}}",
+					title: "{{Session::get("message")}}",
+					button: '확인',
+				});
+			@endif
+
 			$("h1[id='logo']").find("a").text("MY PAGE");
 			$("title").text("MY PAGE");
 

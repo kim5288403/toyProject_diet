@@ -225,6 +225,15 @@
 		$(document).ready(function () {
 			$("h1[id='logo']").find("a").text("index");
 			$("title").text("index");
+
+			@if(Session::has("message"))
+				swal({
+					type: "{{Session::get("type")}}",
+					title: "{{Session::get("message")}}",
+					button: '확인',
+				});
+			@endif
+
 		});
 	</script>
 @endsection

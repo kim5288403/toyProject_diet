@@ -37,6 +37,8 @@ Route::group(["prefix"=>"food","as"=>'food.'],function (){
 
 Route::group(["prefix"=>"meal","as"=>'meal.'],function (){
     Route::get('/',[MealController::class,"meal"])->name("meal");
+    Route::get('/list',[MealController::class,"view"])->name("view");
+    Route::get('/data',[MealController::class,"getData"])->name("getData");
     Route::post('/',[MealController::class,"create"])->name("create");
 });
 

@@ -9,9 +9,15 @@ class MealHashTag extends Model
 {
     use HasFactory;
     protected $table = "meal_hash_tag";
+
+    public function hashTag(){
+        return $this->hasMany(HashTag::class,"id","hash_tag_id");
+    }
     public function convertModel($data) {
         if(isset($data['hash_tag_id']))            $this->hash_tag_id          = $data['hash_tag_id'];
         if(isset($data['meal_id']))         $this->meal_id       = $data['meal_id'];
+        $hash_tag_name = (new HashTag())->where("id",$data['hash_tag_id'])->pluck("name");
+        $this->hash_tag_name = $hash_tag_name[0];
 
         return $this;
     }
