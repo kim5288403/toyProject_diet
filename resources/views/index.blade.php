@@ -8,7 +8,7 @@
 		<div class="col-4 col-6-medium col-12-small">
 			<!-- Feature -->
 			<section>
-				<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+				<a href="#" class="image featured"><img src="/images/pic01.jpg" alt="" /></a>
 				<header>
 					<h3>Okay, so what is this?</h3>
 				</header>
@@ -22,7 +22,7 @@
 
 			<!-- Feature -->
 			<section>
-				<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
+				<a href="#" class="image featured"><img src="/images/pic02.jpg" alt="" /></a>
 				<header>
 					<h3>Nice! What is HTML5 UP?</h3>
 				</header>
@@ -36,7 +36,7 @@
 
 			<!-- Feature -->
 			<section>
-				<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+				<a href="#" class="image featured"><img src="/images/pic03.jpg" alt="" /></a>
 				<header>
 					<h3>What's this built with?</h3>
 				</header>

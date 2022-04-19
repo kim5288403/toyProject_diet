@@ -63,12 +63,13 @@
 
 		<!-- Content -->
 		<div id="content" class="col-8 col-12-medium imp-medium">
-
 			<!-- Post -->
 			<article class="box post">
 					<header>
 						<h2>나만의 <strong>식단 </strong>만들기</h2>
 					</header>
+				<form id="create" method="post" action="{!! route("meal.create") !!}">
+					@csrf
 					<div class="meal">
 						<div class="meat">
 						</div>
@@ -92,32 +93,31 @@
 							<h3>(carbohydrate) : <span class="carbohydrate">0</span></h3><span>g</span>
 						</div>
 						<div>
-							<h3>(calory) : <span class="calory">0</span></h3><span>cal</span>
+							<h3>(calorie) : <span class="calorie">0</span></h3><span>cal</span>
 						</div>
 					</div>
-				<form id="create" method="post" action="">
 					<div class="row gtr-50" >
 						<div class="col-12 col-12-small">
 							<label style="text-align: left">title</label>
-							<input name="Title" placeholder="Title" type="text" value=""/>
+							<input name="title" placeholder="Title" type="text" value=""/>
+							<input class="hide" name="hashTag" >
+							<input class="hide" name="food" >
+							<input class="hide" name="fat" >
+							<input class="hide" name="calorie" >
+							<input class="hide" name="protein" >
+							<input class="hide" name="carbohydrate" >
 						</div>
 						<div class="col-12 col-12-small">
 							<label style="text-align: left">HashTag</label>
 							<div class="editable">
 							</div>
-
 							<ul id="hashTagUl" class="divided" style="background-color:#f7f7f7; ">
 								<li>
 								</li>
 							</ul>
-						</div>
-						<input class="hide" name="food_id">
-						<input class="hide" name="calorie">
-						<input class="hide" name="fat">
-						<input class="hide" name="protein">
-						<input class="hide" name="carbohydrate">
+
 						<div class="col-12 col-12-small">
-							<button type="button" class="form-button-submit button icon solid fa-envelope">식단 만들기</button>
+							<button id="createButton" type="button" class="form-button-submit button icon solid fa-envelope">식단 만들기</button>
 						</div>
 					</div>
 				</form>
@@ -303,7 +303,7 @@
 			});
 
 			$(document).on("click",".hashTag",function () {
-				$(".editable").append("<input value="+$(this).find("h4").text()+" readonly>");
+				$(".editable").append("<input class='hashTag' id='"+$(this)[0].id+"' value="+$(this).find("h4").text()+" readonly>");
 				let close = $(".editable").find("input").clone();
 				$(".editable").text("");
 				$(".editable").append(close);
@@ -311,44 +311,92 @@
 				$(".editable").select();
 			});
 
+			$("#createButton").on("click",function () {
+				let food = $("div[class='meal']").find(".food_image");
+				let hashTag = $("form[id='create']").find("input[class='hashTag']");
+				let title = $("form[id='create']").find("input[name='title']").val();
+				if (title === ""){
+				}
+				if(food.length === 0){
+				}
+				let fat = $("span[class='fat']").text();
+				let protein = $("span[class='protein']").text();
+				let carbohydrate = $("span[class='carbohydrate']").text();
+				let calorie = $("span[class='calorie']").text();
+
+				let hashTagId = hashTagFn(hashTag);
+				let foodId = foodIdFn(food);
+
+				$("input[name='hashTag']").val(hashTagId);
+				$("input[name='food']").val(foodId);
+				$("input[name='calorie']").val(calorie);
+				$("input[name='carbohydrate']").val(carbohydrate);
+				$("input[name='protein']").val(protein);
+				$("input[name='fat']").val(fat);
+				$("form[id='create']").submit();
+			});
+
 		});
+
+		function foodIdFn(food) {
+			let value = "";
+			for (let i = 0; i < food.length; i++){
+				if (0 < i){
+					value = value+","+food[i].id;
+				}else {
+					value = food[i].id;
+				}
+			}
+			return value;
+		}
+
+		function hashTagFn(hashTag) {
+			let value = "";
+			for (let i = 0; i < hashTag.length; i++){
+				if (0 < i){
+					value = value+","+hashTag[i].attributes[1].value;
+				}else {
+					value = hashTag[i].attributes[1].value;
+				}
+			}
+			return value;
+		}
 
 		function food() {
 			let food = $("div[class='meal']").find(".food_image");
 			let protein = 0;
 			let fat = 0;
 			let carbohydrate = 0;
-			let calory = 0;
+			let calorie = 0;
 
 			for(let i = 0; i < food.length; i++){
-				console.log(food[i].attributes);
 				fat = fat+parseInt(food[i].attributes[4].value);
 				carbohydrate = carbohydrate+parseInt(food[i].attributes[5].value);
 				protein = protein+parseInt(food[i].attributes[6].value);
-				calory = calory+parseInt(food[i].attributes[8].value);
+				calorie = calorie+parseInt(food[i].attributes[8].value);
 			}
 
-			$({ val : 0 }).animate({ protein : protein , fat : fat , carbohydrate : carbohydrate , calory : calory}, {
+			$({ val : 0 }).animate({ protein : protein , fat : fat , carbohydrate : carbohydrate , calorie : calorie}, {
 				duration: 1000,
 				step: function() {
 					let fatNum = Math.floor(this.fat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					let proteinNum = Math.floor(this.protein).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					let carbohydrateNum = Math.floor(this.carbohydrate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-					let caloryNum = Math.floor(this.calory).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					let calorieNum = Math.floor(this.calorie).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					$("span[class='fat']").text(fatNum);
 					$("span[class='protein']").text(proteinNum);
 					$("span[class='carbohydrate']").text(carbohydrateNum);
-					$("span[class='calory']").text(caloryNum);
+					$("span[class='calorie']").text(calorieNum);
 				},
 				complete: function() {
 					let fatNum = Math.floor(this.fat).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					let proteinNum = Math.floor(this.protein).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					let carbohydrateNum = Math.floor(this.carbohydrate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-					let caloryNum = Math.floor(this.calory).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+					let calorieNum = Math.floor(this.calorie).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 					$("span[class='fat']").text(fatNum);
 					$("span[class='protein']").text(proteinNum);
 					$("span[class='carbohydrate']").text(carbohydrateNum);
-					$("span[class='calory']").text(caloryNum);
+					$("span[class='calorie']").text(calorieNum);
 				}
 			});
 		}
