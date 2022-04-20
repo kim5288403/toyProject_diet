@@ -6,6 +6,7 @@ use App\Models\Meal;
 use App\Models\MealFood;
 use App\Models\MealHashTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MealController extends Controller
 {
@@ -36,25 +37,28 @@ class MealController extends Controller
     }
 
     public function create(Request $request){
-        $model = new Meal();
-        $data = $request->all();
-        $data["users_id"] = auth()->id();
-        $res = $model->create($data);
-        if ($res){
-            if (!empty($data["hashTag"])){
-                $hashData["hash_tag_id"] = $data["hashTag"];
-                $hashData["meal_id"] = $res->id;
-                $mealHashModel = (new MealHashTag())->create($hashData);
+        DB::beginTransaction();
+        try {
+            $model = new Meal();
+            $data = $request->all();
+            $data["users_id"] = auth()->id();
+            $res = $model->create($data);
+            $data["meal_id"] = $res->id;
+            if ($res){
+                if (!empty($data["hashTag"])){
+                    $mealHashModel = (new MealHashTag())->create($data);
+                }
+                $mealFoodModel = (new MealFood())->create($data);
+
+                DB::commit();
+                return redirect()->route('meal.create')->with(['message'=>'등록 성공 하였습니다.',"type"=>"success"]);
             }
-            $foodData["food_id"] = $data["food"];
-            $foodData["meal_id"] = $res->id;
-            $mealFoodModel = (new MealFood())->create($foodData);
-
-            return redirect()->route('meal.create')->with(['message'=>'등록 성공 하였습니다.',"type"=>"success"]);
-        }else{
             return redirect()->route('meal.create')->with(['message'=>'등록 실패 하였습니다.',"type"=>"warning"]);
-
+        }catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->route('meal.create')->with(['message'=>"등록 실패 하였습니다.","type"=>"warning"]);
         }
+
     }
 
 }

@@ -23,7 +23,7 @@ class MealHashTag extends Model
     }
 
     public function create($data){
-        foreach (explode(",",$data['hash_tag_id']) as $item){
+        foreach (explode(",",$data['hashTag']) as $item){
             $res = new self();
             $data['hash_tag_id'] = $item;
             $res->convertModel($data);

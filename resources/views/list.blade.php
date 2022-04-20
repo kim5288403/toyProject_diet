@@ -9,8 +9,7 @@
 			<!-- Post -->
 			<article class="box post">
 				<header>
-					<h2>Behold! This is the <strong>left sidebar</strong> layout<br />
-						with a sidebar on the left!</h2>
+					<h2>저희 다이어트 사용자들과 여러가지 <br/><strong>식단을</strong> 공유해요!</h2>
 				</header>
 				<ul id="mealUl" class="divided">
 				</ul>
@@ -45,8 +44,8 @@
 		}
 
 		#mealUl h2{
-			width: 50%;
-			height: 20%;
+			width: 100%;
+			height: 15%;
 			margin-top: 2%;
 		}
 
@@ -106,9 +105,9 @@
 		}
 
 		.nutrition div{
-			width: 50%;
+			width: 100%;
 			display: flex;
-			justify-content: center;
+			justify-content: left;
 		}
 
 		.hashTag{
@@ -123,12 +122,36 @@
 			margin: 2%;
 			color: #ed786a;
 		}
+
 		.infoHeader{
 			margin-top: 2%;
 			width: 100%;
 			display: flex;
 			justify-content: center;
 		}
+
+		.meal .rice,.vegetable,.fruit,.meat,.nut{
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+		}
+		.food_image img{
+			width: 60px;
+		}
+		.food_image p{
+			font-size: 15px;
+			height: 0px;
+		}
+		.food_image{
+			border: 1px solid #cccccc;
+			border-radius: 1.25rem;
+			width: 80px;
+			cursor: pointer;
+			text-align: center;
+			max-height: 100px;
+			margin: 1%;
+		}
+
 	</style>
 @endsection
 @section("script")
@@ -162,8 +185,10 @@
 
 					$("#mealUl").find("li").remove();
 					let appendList = "";
-					console.log(result["list"]);
+					let appendFood = "";
+
 					for (let j = 0; j < result["list"].length; j++){
+
 						appendList = "";
 						appendList += "<li>";
 							appendList += "<div class='content'>";
@@ -176,7 +201,7 @@
 								appendList += "</div>";
 								appendList += "<div class='info'>";
 									appendList += "<div class='infoHeader'>";
-										appendList += "<h2>"+result["list"][j].title+"</h2>";
+										appendList += "<h2>'"+result["list"][j]["users"].name+"' 님의 <br><strong>"+result["list"][j].title+"</strong></h2>";
 									appendList += "</div>";
 									appendList += "<div class='nutrition'>";
 										appendList += "<div>";
@@ -186,19 +211,36 @@
 											appendList += "<h3>(protein) : <span class='protein'>"+result["list"][j].protein+"</span></h3><span>g</span>"
 										appendList += "</div>";
 										appendList += "<div>";
-											appendList += "<h3>(carbohydrate) : <span class='carbohydrate'>"+result["list"][j].carbohydrate+"</span></h3><span>g</span>"
+											appendList += "<h3>(calorie) : <span class='calorie'>"+result["list"][j].calorie+"</span></h3><span>cal</span>"
 										appendList += "</div>";
 										appendList += "<div>";
-											appendList += "<h3>(calorie) : <span class='calorie'>"+result["list"][j].calorie+"</span></h3><span>cal</span>"
+											appendList += "<h3>(carbohydrate) : <span class='carbohydrate'>"+result["list"][j].carbohydrate+"</span></h3><span>g</span>"
 										appendList += "</div>";
 									appendList += "</div>";
 									appendList += "<div class='hashTag'>";
+									if (result["list"][j]["meal_hash_tag"].length > 0){
+										for (let k = 0; k < result["list"][j]["meal_hash_tag"].length; k++){
+											appendList += "<h4>#"+result["list"][j]["meal_hash_tag"][k].hash_tag_name+"</h4>";
+										}
+									}
 									appendList += "</div>";
 								appendList += "</div>";
 							appendList += "</div>";
 						appendList += "</li>";
 						$("#mealUl").append(appendList);
+
+						for (let l = 0; l < result["list"][j]["meal_food"].length; l++){
+							appendFood = "";
+							appendFood += "<div class='food_image'>";
+							appendFood += "<img src='/images/food/"+result["list"][j]["meal_food"][l].food_image+".png'>";
+							appendFood += "<p>"+result["list"][j]["meal_food"][l].food_name+"</p>";
+							appendFood += "</div>";
+							$("."+result["list"][j]["meal_food"][l].food_category+"").append(appendFood);
+						}
+
 					}
+
+
 
 				},
 				error:function (error,message,status) {

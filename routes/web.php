@@ -24,6 +24,7 @@ Route::get('/', function () {
 })->name("index");
 
 Route::get('/login',[AuthController::class,"login"])->name("login");
+Route::get('/logout',[AuthController::class,"logout"])->name("logout");
 Route::get('/join',[AuthController::class,"join"])->name("join");
 Route::post('/store',[AuthController::class,"store"])->name("store");
 
@@ -37,7 +38,7 @@ Route::group(["prefix"=>"food","as"=>'food.'],function (){
 
 Route::group(["prefix"=>"meal","as"=>'meal.'],function (){
     Route::get('/',[MealController::class,"meal"])->name("meal");
-    Route::get('/list',[MealController::class,"view"])->name("view");
+    Route::get('/view',[MealController::class,"view"])->name("view");
     Route::get('/data',[MealController::class,"getData"])->name("getData");
     Route::post('/',[MealController::class,"create"])->name("create");
 });

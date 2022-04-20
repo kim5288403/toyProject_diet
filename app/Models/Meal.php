@@ -14,8 +14,15 @@ class Meal extends Model
         return $this->hasMany(MealHashTag::class,"meal_id","id");
     }
 
+    public function mealFood(){
+        return $this->hasMany(MealFood::class,"meal_id","id");
+    }
+    public function users(){
+        return $this->hasOne(User::class,"id","users_id");
+    }
+
     public function getSearchList(){
-        return self::with(["mealHashTag"])->whereNotNull("id");
+        return self::with(["mealHashTag","mealFood","users"])->whereNotNull("id");
     }
 
     public function convertModel($data) {
