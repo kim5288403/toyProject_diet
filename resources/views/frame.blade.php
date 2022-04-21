@@ -23,7 +23,6 @@
 
     <!-- Scripts -->
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="/assets/js/jquery.dropotron.min.js"></script>
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/browser.min.js"></script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HashTag;
 use App\Models\Meal;
 use App\Models\MealFood;
 use App\Models\MealHashTag;
@@ -45,6 +46,9 @@ class MealController extends Controller
             $res = $model->create($data);
             $data["meal_id"] = $res->id;
             if ($res){
+                if (!empty($data["etcHashTag"])){
+                    $hashTagModel = (new HashTag())->create($data["etcHashTag"]);
+                }
                 if (!empty($data["hashTag"])){
                     $mealHashModel = (new MealHashTag())->create($data);
                 }
@@ -56,6 +60,7 @@ class MealController extends Controller
             return redirect()->route('meal.create')->with(['message'=>'등록 실패 하였습니다.',"type"=>"warning"]);
         }catch (\Exception $exception){
             DB::rollBack();
+            dd($exception);
             return redirect()->route('meal.create')->with(['message'=>"등록 실패 하였습니다.","type"=>"warning"]);
         }
 

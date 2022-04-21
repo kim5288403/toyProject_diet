@@ -106,9 +106,11 @@
 							<input class="hide" name="calorie" >
 							<input class="hide" name="protein" >
 							<input class="hide" name="carbohydrate" >
+							<input class="hide" name="etcHashTag" >
 						</div>
 						<div class="col-12 col-12-small">
 							<label style="text-align: left">HashTag</label>
+							<div id="hashTagDiv"></div>
 							<div class="editable">
 							</div>
 							<ul id="hashTagUl" class="divided" style="background-color:#f7f7f7; ">
@@ -119,6 +121,7 @@
 						<div class="col-12 col-12-small">
 							<button id="createButton" type="button" class="form-button-submit button icon solid fa-envelope">식단 만들기</button>
 						</div>
+					</div>
 					</div>
 				</form>
 			</article>
@@ -220,7 +223,7 @@
 			overflow-y: auto;
 		}
 
-		.editable input{
+		#hashTagDiv span{
 			border:none;
 			border-right:0px;
 			border-top:0px;
@@ -284,14 +287,21 @@
 				 food();
 			});
 
-			$(".editable").on("keyup",function () {
-				if ($(this).text().charAt(0) === "#"){
+			$(".editable").on("keyup",function (event) {
+				let search = $(this).text().split("#");
+
+				if ($(this).text().charAt(0) === "#" && event.key === " "){
+					let data = "<span class='etcHashTag'>"+$(this).text()+" </span>";
+					$("#hashTagDiv").append(data);
+					$(".editable").text("");
+				}
+
 					$("#hashTagUl").show();
 					$.ajax({
 						url:"{{route('hashTag.data')}}",
 						method:"get",
 						data:{
-							"search" : $(this).text()
+							"search" : search[search.length-1]
 						},
 						success:function (result) {
 							let appendText = "";
@@ -307,22 +317,21 @@
 							alert("error : "+error+"message : "+message+"status : "+status);
 						}
 					})
-				}
 			});
 
 			$(document).on("click",".hashTag",function () {
-				$(".editable").append("<input class='hashTag' id='"+$(this)[0].id+"' value="+$(this).find("h4").text()+" readonly>");
-				let close = $(".editable").find("input").clone();
+				let data = "<span class='hashTag' id='"+$(this)[0].id+"'>"+$(this).find("h4").text()+" </span>";
+				$("#hashTagDiv").append(data);
 				$(".editable").text("");
-				$(".editable").append(close);
 				$("#hashTagUl").hide();
-				$(".editable").select();
 			});
 
 			$("#createButton").on("click",function () {
 				let food = $("div[class='meal']").find(".food_image");
 				let hashTag = $("form[id='create']").find("input[class='hashTag']");
 				let title = $("form[id='create']").find("input[name='title']").val();
+				let etcHashTag = $("span[class='etcHashTag']").text();
+
 				if (title === ""){
 					return swal({
 						type: "warning",
@@ -346,6 +355,7 @@
 				let foodId = foodIdFn(food);
 
 				$("input[name='hashTag']").val(hashTagId);
+				$("input[name='etcHashTag']").val(etcHashTag);
 				$("input[name='food']").val(foodId);
 				$("input[name='calorie']").val(calorie);
 				$("input[name='carbohydrate']").val(carbohydrate);

@@ -19,7 +19,7 @@ class AuthController extends Controller
             'password'=>$request->password
         ];
         if(!auth()->attempt($credentials)){
-           return view("login")->with(['message'=>'잘못된 로그인 정보입니다.',"type"=>"warning"]);
+           return back()->with(['message'=>'잘못된 로그인 정보입니다.',"type"=>"warning"]);
         }
         return view("index")->with(['message'=>'로그인 성공하였습니다.',"type"=>"success"]);
     }
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
             return view("login")->with(['message'=>'회원가입 성공하였습니다.',"type"=>"success"]);
         }
-        return view('join')->with(['message'=>'회원가입 실하였습니다.',"type"=>"warning"]);;
+        return back()->with(['message'=>'회원가입 실하였습니다.',"type"=>"warning"]);;
     }
 
     public function logout(){
