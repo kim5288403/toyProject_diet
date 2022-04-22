@@ -9,6 +9,7 @@ class MealHashTag extends Model
 {
     use HasFactory;
     protected $table = "meal_hash_tag";
+    protected $with = ['hashTag'];
 
     public function hashTag(){
         return $this->hasMany(HashTag::class,"id","hash_tag_id");

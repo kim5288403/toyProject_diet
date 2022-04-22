@@ -21,6 +21,30 @@
 @endsection
 @section("css")
 	<style>
+		@media (max-width: 697px) {
+			.nutrition{
+				font-size: 75%!important;
+			}
+		}
+		@media (max-width: 564px) {
+			.info{
+				width: 100% !important;
+			}
+			.info .infoHeader{
+				display: none;
+			}
+			.info .nutrition{
+				display: none;
+			}
+			.meal{
+				width: 100% !important;
+				height: 80% !important;
+			}
+			#mealUl .content {
+				display: flex;
+				flex-wrap: wrap;
+			}
+		}
 
 		#mealUl{
 			display: flex;
@@ -102,6 +126,7 @@
 			flex-direction: row;
 			flex-wrap: wrap;
 			justify-content: space-between;
+			font-size: 100%;
 		}
 
 		.nutrition div{
@@ -121,6 +146,7 @@
 		.hashTag h4{
 			margin: 2%;
 			color: #ed786a;
+			font-size: 100%;
 		}
 
 		.infoHeader{
@@ -135,20 +161,34 @@
 			flex-wrap: wrap;
 			flex-direction: row;
 		}
+
 		.food_image img{
-			width: 60px;
+			width: 100%;
+			max-height: 60%;
 		}
+
 		.food_image p{
-			font-size: 15px;
+			font-size: 70%;
 			height: 0px;
 		}
+
+		.rice .food_image{
+			border: 1px solid #cccccc;
+			border-radius: 1.25rem;
+			width: 15%;
+			cursor: pointer;
+			text-align: center;
+			max-height: 35%;
+			margin: 1%;
+		}
+
 		.food_image{
 			border: 1px solid #cccccc;
 			border-radius: 1.25rem;
-			width: 80px;
+			width: 31%;
 			cursor: pointer;
 			text-align: center;
-			max-height: 100px;
+			max-height: 47%;
 			margin: 1%;
 		}
 
@@ -188,9 +228,9 @@
 					let appendFood = "";
 
 					for (let j = 0; j < result["list"].length; j++){
-
+						console.log(result["list"][j]);
 						appendList = "";
-						appendList += "<li>";
+						appendList += "<li id='"+result["list"][j].id+"'>";
 							appendList += "<div class='content'>";
 								appendList += "<div class='meal'>";
 										appendList += "<div class='meat'></div>";
@@ -220,7 +260,7 @@
 									appendList += "<div class='hashTag'>";
 									if (result["list"][j]["meal_hash_tag"].length > 0){
 										for (let k = 0; k < result["list"][j]["meal_hash_tag"].length; k++){
-											appendList += "<h4>#"+result["list"][j]["meal_hash_tag"][k].hash_tag_name+"</h4>";
+											appendList += "<h4>#"+result["list"][j]["meal_hash_tag"][k].hash_tag[0].name+"</h4>";
 										}
 									}
 									appendList += "</div>";
@@ -235,7 +275,7 @@
 							appendFood += "<img src='/images/food/"+result["list"][j]["meal_food"][l].food_image+".png'>";
 							appendFood += "<p>"+result["list"][j]["meal_food"][l].food_name+"</p>";
 							appendFood += "</div>";
-							$("."+result["list"][j]["meal_food"][l].food_category+"").append(appendFood);
+							$("li[id='"+result["list"][j].id+"']").find("."+result["list"][j]["meal_food"][l].food_category+"").append(appendFood);
 						}
 
 					}
